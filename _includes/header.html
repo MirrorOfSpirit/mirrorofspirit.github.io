@@ -1,0 +1,27 @@
+<header class="site-header" id="site-header">
+  <div class="wrap">
+    <a class="brand" href="{{ "/" | relative_url }}">
+      <span class="dot"></span>
+      {{ site.author.name }}
+    </a>
+
+    <nav class="main-nav">
+      <a href="{{ "/writeups/" | relative_url }}" {% if page.url contains '/writeups/' %}class="active"{% endif %}>Writeups</a>
+      <a href="{{ "/projects/" | relative_url }}" {% if page.url contains '/projects/' %}class="active"{% endif %}>Projects</a>
+      <a href="{{ "/notes/" | relative_url }}" {% if page.url contains '/notes/' %}class="active"{% endif %}>Notes</a>
+      <a href="{{ "/tags/" | relative_url }}" {% if page.url == '/tags/' %}class="active"{% endif %}>Tags</a>
+      <a href="{{ "/about/" | relative_url }}" {% if page.url == '/about/' %}class="active"{% endif %}>About</a>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="search-trigger" id="search-trigger" aria-label="Open search">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <span>Search</span>
+        <kbd>/</kbd>
+      </button>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,82 @@
+---
+layout: default
+---
+<section class="hero">
+  <div class="wrap">
+    <p class="hero-prompt">whoami</p>
+    <h1>{{ site.author.name }} — {{ site.author.role }}</h1>
+    <p class="lede">{{ site.author.bio }}</p>
+
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="num">{{ site.writeups | size }}</span>
+        <span class="label">Writeups</span>
+      </div>
+      <div class="hero-stat">
+        <span class="num">{{ site.projects | size }}</span>
+        <span class="label">Projects</span>
+      </div>
+      <div class="hero-stat">
+        <span class="num">{{ site.notes | size }}</span>
+        <span class="label">Notes</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  {{ content }}
+
+  <div class="section-head">
+    <h2>Recent writeups</h2>
+    <a class="see-all" href="{{ "/writeups/" | relative_url }}">View all →</a>
+  </div>
+  <div class="card-grid">
+    {% assign recent_writeups = site.writeups | sort: "date" | reverse | slice: 0, 4 %}
+    {% for post in recent_writeups %}
+      <a class="card" href="{{ post.url | relative_url }}">
+        <div class="card-top">
+          {% if post.difficulty %}<span class="badge badge--{{ post.difficulty | downcase }}">{{ post.difficulty }}</span>{% endif %}
+          {% if post.os %}<span class="badge badge--neutral">{{ post.os }}</span>{% endif %}
+        </div>
+        <h3>{{ post.title }}</h3>
+        <p class="desc">{{ post.excerpt | strip_html | truncate: 100 }}</p>
+        <div class="meta">
+          <span>{{ post.date | date: "%b %-d, %Y" }}</span>
+          {% assign words = post.content | number_of_words %}
+          <span>{{ words | divided_by: site.reading_speed_wpm | at_least: 1 }} min read</span>
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+
+  <div class="section-head">
+    <h2>Featured projects</h2>
+    <a class="see-all" href="{{ "/projects/" | relative_url }}">View all →</a>
+  </div>
+  <div class="card-grid">
+    {% assign recent_projects = site.projects | sort: "date" | reverse | slice: 0, 3 %}
+    {% for project in recent_projects %}
+      <a class="card" href="{{ project.url | relative_url }}">
+        <div class="card-top">
+          {% for tag in project.tags limit: 3 %}<span class="badge badge--info">{{ tag }}</span>{% endfor %}
+        </div>
+        <h3>{{ project.title }}</h3>
+        <p class="desc">{{ project.description | default: project.excerpt | strip_html | truncate: 110 }}</p>
+      </a>
+    {% endfor %}
+  </div>
+
+  <div class="section-head">
+    <h2>Latest notes</h2>
+    <a class="see-all" href="{{ "/notes/" | relative_url }}">View all →</a>
+  </div>
+  {% assign recent_notes = site.notes | sort: "date" | reverse | slice: 0, 5 %}
+  {% for note in recent_notes %}
+    <a class="list-row" href="{{ note.url | relative_url }}">
+      <span class="title">{{ note.title }}</span>
+      {% for tag in note.tags limit: 2 %}<span class="tag">{{ tag }}</span>{% endfor %}
+      <span class="date">{{ note.date | date: "%b %-d, %Y" }}</span>
+    </a>
+  {% endfor %}
+</div>

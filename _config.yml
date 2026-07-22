@@ -1,0 +1,85 @@
+# ---------------------------------------------------------------------------
+# Site settings — edit these, then you should never need to touch HTML again.
+# ---------------------------------------------------------------------------
+
+title: "Georgios Papastathopoulos"
+tagline: "Offensive Security Writeups"
+description: "Penetration testing writeups, security notes, tooling, and projects."
+url: "https://mirrorofspirit.github.io"
+baseurl: ""
+
+author:
+  name: "Georgios Papastathopoulos"
+  role: "Penetration Tester / Security Researcher"
+  bio: "HTB CPTS holder documenting HackTheBox writeups, security notes, and tooling."
+  email: "georgios.papastathopoulos02@gmail.com"
+  github: "MirrorOfSpirit"
+  linkedin: "georgios-papastathopoulos-120566302"
+  twitter: ""
+  resume: "/assets/resume.pdf"
+
+# Reading speed used to estimate reading time (words per minute)
+reading_speed_wpm: 200
+
+# ---------------------------------------------------------------------------
+# Build settings
+# ---------------------------------------------------------------------------
+markdown: kramdown
+highlighter: rouge
+permalink: /:collection/:title/
+
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  auto_ids: true
+  toc_levels: 2..4
+
+collections:
+  writeups:
+    output: true
+    permalink: /writeups/:path/
+  projects:
+    output: true
+    permalink: /projects/:path/
+  notes:
+    output: true
+    permalink: /notes/:path/
+
+defaults:
+  - scope:
+      path: ""
+      type: "writeups"
+    values:
+      layout: "writeup"
+      tags: []
+  - scope:
+      path: ""
+      type: "projects"
+    values:
+      layout: "project"
+      tags: []
+  - scope:
+      path: ""
+      type: "notes"
+    values:
+      layout: "note"
+      tags: []
+  - scope:
+      path: ""
+    values:
+      layout: "page"
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+sass:
+  style: compressed
+
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor

@@ -1,0 +1,35 @@
+---
+layout: default
+---
+<article>
+  <div class="wrap">
+    <header class="report-header">
+      <h1>{{ page.title }}</h1>
+      <div class="report-meta">
+        <dl>
+          <dt>Date</dt>
+          <dd>{{ page.date | date: "%b %-d, %Y" }}</dd>
+        </dl>
+        <dl>
+          <dt>Reading time</dt>
+          <dd>{% assign words = page.content | number_of_words %}{{ words | divided_by: site.reading_speed_wpm | at_least: 1 }} min</dd>
+        </dl>
+      </div>
+      {% if page.tags and page.tags.size > 0 %}
+      <div class="report-tags">
+        {% for tag in page.tags %}<a class="tag" href="{{ "/tags/" | relative_url }}#{{ tag | slugify }}">#{{ tag }}</a>{% endfor %}
+      </div>
+      {% endif %}
+    </header>
+
+    <div class="content-layout">
+      <div class="article-body" id="article-body">
+        {{ content }}
+      </div>
+      <aside class="toc-wrap">
+        <div class="toc-label">On this page</div>
+        <nav id="toc"></nav>
+      </aside>
+    </div>
+  </div>
+</article>

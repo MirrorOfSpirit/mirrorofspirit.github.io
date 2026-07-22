@@ -1,0 +1,54 @@
+---
+layout: default
+---
+<div class="wrap" style="padding: 48px 0 80px;">
+  <h1>{{ page.title }}</h1>
+  {% if page.description %}<p class="lede" style="color:var(--text-dim); max-width:65ch;">{{ page.description }}</p>{% endif %}
+
+  {% assign items = site[page.collection_key] | sort: "date" | reverse %}
+  {% assign all_tags = items | map: "tags" | compact | uniq | sort %}
+
+  {% if all_tags.size > 0 %}
+  <div class="filter-bar" id="filter-bar">
+    <button class="active" data-tag="all">All</button>
+    {% for t in all_tags %}<button data-tag="{{ t }}">{{ t }}</button>{% endfor %}
+  </div>
+  {% endif %}
+
+  <div class="card-grid" id="filterable-grid">
+    {% for item in items %}
+      <a class="card" href="{{ item.url | relative_url }}" data-tags="{{ item.tags | join: ',' }}">
+        <div class="card-top">
+          {% if item.difficulty %}<span class="badge badge--{{ item.difficulty | downcase }}">{{ item.difficulty }}</span>{% endif %}
+          {% if item.os %}<span class="badge badge--neutral">{{ item.os }}</span>{% endif %}
+        </div>
+        <h3>{{ item.title }}</h3>
+        <p class="desc">{{ item.description | default: item.excerpt | strip_html | truncate: 110 }}</p>
+        <div class="meta">
+          <span>{{ item.date | date: "%b %-d, %Y" }}</span>
+          {% assign words = item.content | number_of_words %}
+          <span>{{ words | divided_by: site.reading_speed_wpm | at_least: 1 }} min read</span>
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+  (function () {
+    var bar = document.getElementById('filter-bar');
+    if (!bar) return;
+    var cards = document.querySelectorAll('#filterable-grid .card');
+    bar.addEventListener('click', function (e) {
+      var btn = e.target.closest('button');
+      if (!btn) return;
+      bar.querySelectorAll('button').forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      var tag = btn.dataset.tag;
+      cards.forEach(function (card) {
+        var tags = (card.dataset.tags || '').split(',');
+        card.style.display = (tag === 'all' || tags.indexOf(tag) !== -1) ? '' : 'none';
+      });
+    });
+  })();
+</script>

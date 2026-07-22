@@ -1,0 +1,54 @@
+---
+layout: default
+---
+<article>
+  <div class="wrap">
+    <header class="report-header">
+      <h1>{{ page.title }}</h1>
+
+      <div class="report-meta">
+        <dl>
+          <dt>Difficulty</dt>
+          <dd>{% if page.difficulty %}<span class="badge badge--{{ page.difficulty | downcase }}">{{ page.difficulty }}</span>{% else %}—{% endif %}</dd>
+        </dl>
+        <dl>
+          <dt>OS</dt>
+          <dd>{{ page.os | default: "—" }}</dd>
+        </dl>
+        <dl>
+          <dt>Date</dt>
+          <dd>{{ page.date | date: "%b %-d, %Y" }}</dd>
+        </dl>
+        <dl>
+          <dt>Reading time</dt>
+          <dd>{% assign words = page.content | number_of_words %}{{ words | divided_by: site.reading_speed_wpm | at_least: 1 }} min</dd>
+        </dl>
+      </div>
+
+      {% if page.tags and page.tags.size > 0 %}
+      <div class="report-tags">
+        {% for tag in page.tags %}<a class="tag" href="{{ "/tags/" | relative_url }}#{{ tag | slugify }}">#{{ tag }}</a>{% endfor %}
+      </div>
+      {% endif %}
+    </header>
+
+    <div class="content-layout">
+      <div class="article-body" id="article-body">
+        {{ content }}
+      </div>
+
+      <aside class="toc-wrap">
+        {% if page.skills and page.skills.size > 0 %}
+        <div class="toc-label">Skills demonstrated</div>
+        <ul class="skills-list">
+          {% for skill in page.skills %}<li>{{ skill }}</li>{% endfor %}
+        </ul>
+        <div class="toc-label" style="margin-top:24px;">On this page</div>
+        {% else %}
+        <div class="toc-label">On this page</div>
+        {% endif %}
+        <nav id="toc"></nav>
+      </aside>
+    </div>
+  </div>
+</article>

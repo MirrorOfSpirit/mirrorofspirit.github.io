@@ -1,0 +1,31 @@
+---
+layout: default
+---
+<article>
+  <div class="wrap">
+    <header class="report-header">
+      <h1>{{ page.title }}</h1>
+      {% if page.tags and page.tags.size > 0 %}
+      <div class="report-tags">
+        {% for tag in page.tags %}<span class="tag">#{{ tag }}</span>{% endfor %}
+      </div>
+      {% endif %}
+      {% if page.repo or page.link %}
+      <p style="margin-top:16px;">
+        {% if page.repo %}<a class="tag" href="{{ page.repo }}" target="_blank" rel="noopener">↳ Source</a>{% endif %}
+        {% if page.link %}<a class="tag" href="{{ page.link }}" target="_blank" rel="noopener">↳ Live / Demo</a>{% endif %}
+      </p>
+      {% endif %}
+    </header>
+
+    <div class="content-layout">
+      <div class="article-body" id="article-body">
+        {{ content }}
+      </div>
+      <aside class="toc-wrap">
+        <div class="toc-label">On this page</div>
+        <nav id="toc"></nav>
+      </aside>
+    </div>
+  </div>
+</article>
